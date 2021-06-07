@@ -1,0 +1,34 @@
+include: package:pedantic/analysis_options.yaml
+
+# Full list available at http://dart-lang.github.io/linter/lints/options/options.html.
+linter:
+  rules:
+      # Add additional rules to be checked by the linter
+      #   - <rule_name>
+    - always_declare_return_types
+    - always_require_non_null_named_parameters
+    - annotate_overrides
+    - avoid_null_checks_in_equality_operators
+    - camel_case_extensions
+    - omit_local_variable_types
+    - prefer_adjacent_string_concatenation
+    - prefer_collection_literals
+    - prefer_conditional_assignment
+    - prefer_final_fields
+    - prefer_for_elements_to_map_fromIterable
+    - prefer_generic_function_type_aliases
+    - prefer_if_null_operators
+    - prefer_single_quotes
+    - prefer_spread_collections
+
+analyzer:
+  exclude:
+    - lib/apis/**/handler/**
+    - lib/apis/**/model/*.g.dart
+    - lib/apis/**/model/*.freezed.dart
+    - lib/state/*.g.dart
+    - lib/state/*.freezed.dart
+    - lib/model/*.g.dart
+    - lib/model/*.freezed.dart
+    # Exlude generated packages like API packages created from swagger
+
