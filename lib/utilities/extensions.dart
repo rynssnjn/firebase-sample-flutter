@@ -22,6 +22,17 @@ extension TicketTypeExt on TicketType {
         return Colors.greenAccent;
     }
   }
+
+  String get stringValue {
+    switch (this) {
+      case TicketType.BUG:
+        return 'Bug';
+      case TicketType.TASK:
+        return 'Task';
+      case TicketType.CHANGE_REQUEST:
+        return 'Change Request';
+    }
+  }
 }
 
 extension TaskProgressExt on TaskProgress {

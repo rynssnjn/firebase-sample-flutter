@@ -11,7 +11,6 @@ class AppTextField extends StatelessWidget {
     this.onChangedHandler,
     this.isRequired = false,
     this.controller,
-    this.enabled = true,
     this.inputTextStyle,
     this.message,
     this.underlineColor,
@@ -26,7 +25,6 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<String>? onChangedHandler;
   final TextEditingController? controller;
   final bool? isRequired;
-  final bool? enabled;
   final TextStyle? inputTextStyle;
   final String? message;
   final Color? underlineColor;
@@ -42,7 +40,6 @@ class AppTextField extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextFormField(
-            enabled: enabled,
             controller: controller,
             maxLines: null,
             decoration: InputDecoration(
@@ -50,12 +47,12 @@ class AppTextField extends StatelessWidget {
               isDense: true,
               contentPadding: EdgeInsets.symmetric(vertical: 4),
               hintText: hintText,
-              hintStyle: hintTextStyle ?? textTheme.bodyText1!.copyWith(fontSize: 15),
+              hintStyle: hintTextStyle ?? textTheme.bodyText1,
               counterStyle: textTheme.bodyText1,
             ),
             keyboardType: keyboardType ?? TextInputType.text,
             textInputAction: textInputAction,
-            style: inputTextStyle ?? textTheme.headline4!.copyWith(fontWeight: FontWeight.w400),
+            style: inputTextStyle ?? textTheme.bodyText1!,
             inputFormatters: inputFormatters,
             onChanged: onChangedHandler,
             textCapitalization: TextCapitalization.sentences,

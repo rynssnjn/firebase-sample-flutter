@@ -13,19 +13,18 @@ class HelperText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final helperTextStyle = textTheme.bodyText1;
 
     return RichText(
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
             text: helperText,
-            style: helperTextStyle,
+            style: textTheme.caption,
           ),
           if (isRequired!)
             TextSpan(
               text: ' *',
-              style: helperTextStyle!.copyWith(color: formErrorColor),
+              style: textTheme.caption!.copyWith(color: formErrorColor),
             ),
         ],
       ),
