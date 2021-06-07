@@ -20,9 +20,6 @@ class InitNewTask extends ReduxAction<AppState> {
 }
 
 class AddTask extends ReduxAction<AppState> {
-  AddTask(this.task);
-  final TaskModel? task;
-
   @override
   Future<AppState?> reduce() async {
     await TaskApi().create(state.taskState.newTask!);

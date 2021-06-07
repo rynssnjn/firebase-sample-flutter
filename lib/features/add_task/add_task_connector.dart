@@ -14,7 +14,7 @@ class AddTaskViewModel extends BaseModel<AppState> {
     this.onUpdateTask,
   }) : super(equals: []);
 
-  Future<void> Function(TaskModel data)? onAddTask;
+  Future<void> Function()? onAddTask;
   Function(UnionTaskForm form)? onUpdateTask;
 
   @override
@@ -25,7 +25,7 @@ class AddTaskViewModel extends BaseModel<AppState> {
     );
   }
 
-  Future<void> _onAddTask(TaskModel data) async => await dispatchFuture!(AddTask(data));
+  Future<void> _onAddTask() async => await dispatchFuture!(AddTask());
 
   TaskModel get _task => state.taskState.newTask!;
 
@@ -48,7 +48,8 @@ class AddTaskConnector extends StatelessWidget {
       model: AddTaskViewModel(),
       builder: (context, vm) => AddTaskWidget(
         onAddTask: vm.onAddTask!,
-        onUpdateTask: vm.onUpdateTask!,
+        onChangeTitle: (text) => vm.onUpdateTask!(UnionTaskForm.title(text)),
+        onChangeDescription: (text) => vm.onUpdateTask!(UnionTaskForm.description(text)),
       ),
     );
   }
