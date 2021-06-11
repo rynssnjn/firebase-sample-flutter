@@ -4,6 +4,7 @@ import 'package:firebase_sample/features/task_page/task_page_widget.dart';
 import 'package:firebase_sample/models/union_task_form.dart';
 import 'package:firebase_sample/state/actions/task_actions.dart';
 import 'package:firebase_sample/state/app_state.dart';
+import 'package:firebase_sample/utilities/enums.dart';
 import 'package:flutter/material.dart';
 
 class TaskPageViewModel extends BaseModel<AppState> {
@@ -12,11 +13,15 @@ class TaskPageViewModel extends BaseModel<AppState> {
   TaskPageViewModel.build({
     this.onAddTask,
     this.onUpdateTask,
+    this.onDeleteTask,
+    this.onEditTask,
     this.newTask,
   }) : super(equals: []);
 
   Future<void> Function()? onAddTask;
-  Function(UnionTaskForm form)? onUpdateTask;
+  Future<void> Function(String id)? onUpdateTask;
+  Future<void> Function(String id)? onDeleteTask;
+  Function(UnionTaskForm form)? onEditTask;
   TaskModel? newTask;
 
   @override
@@ -24,28 +29,49 @@ class TaskPageViewModel extends BaseModel<AppState> {
     return TaskPageViewModel.build(
       onAddTask: _onAddTask,
       onUpdateTask: _onUpdateTask,
+      onDeleteTask: _onDeleteTask,
+      onEditTask: _onEditTask,
       newTask: _task,
     );
   }
 
   Future<void> _onAddTask() async => await dispatchFuture!(AddTask());
 
+  Future<void> _onUpdateTask(String id) async => await dispatchFuture!(UpdateTask(id, state.taskState.newTask!));
+
+  Future<void> _onDeleteTask(String id) async => await dispatchFuture!(DeleteTask(id));
+
   TaskModel get _task => state.taskState.newTask!;
 
-  void _onUpdateTask(UnionTaskForm form) {
+  void _onEditTask(UnionTaskForm form) {
     final updatedTask = form.when(
       title: (value) => _task.copyWith(title: value),
       description: (value) => _task.copyWith(description: value),
       type: (value) => _task.copyWith(type: value),
       priority: (value) => _task.copyWith(priority: value),
+      progress: (value) => _task.copyWith(progress: value),
     );
 
     dispatch!(EditTask(task: updatedTask));
   }
 }
 
+class TaskPageArguments {
+  const TaskPageArguments({
+    this.action,
+    this.taskId,
+  });
+
+  final TaskAction? action;
+  final String? taskId;
+}
+
 class TaskPageConnector extends StatelessWidget {
   static const route = 'task-page';
+
+  const TaskPageConnector({required this.args});
+
+  final TaskPageArguments args;
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +79,11 @@ class TaskPageConnector extends StatelessWidget {
       model: TaskPageViewModel(),
       builder: (context, vm) => TaskPageWidget(
         onSaveTask: vm.onAddTask!,
-        onChangeTitle: (text) => vm.onUpdateTask!(UnionTaskForm.title(text)),
-        onChangeDescription: (text) => vm.onUpdateTask!(UnionTaskForm.description(text)),
-        onChangeTicketType: (type) => vm.onUpdateTask!(UnionTaskForm.type(type)),
-        onChangePriority: (priority) => vm.onUpdateTask!(UnionTaskForm.priority(priority)),
-        type: vm.newTask!.type,
-        priority: vm.newTask!.priority,
+        onUpdateTask: () => vm.onUpdateTask!(args.taskId!),
+        onDeleteTask: () => vm.onDeleteTask!(args.taskId!),
+        onEditTask: vm.onEditTask,
+        task: vm.newTask,
+        action: args.action,
       ),
     );
   }

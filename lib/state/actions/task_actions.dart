@@ -7,6 +7,10 @@ import 'package:firebase_sample/state/app_state.dart';
 import 'package:firebase_sample/utilities/enums.dart';
 
 class InitNewTask extends ReduxAction<AppState> {
+  InitNewTask({this.task});
+
+  final TaskModel? task;
+
   @override
   AppState? reduce() {
     final model = TaskModel(
@@ -16,7 +20,7 @@ class InitNewTask extends ReduxAction<AppState> {
       progress: TaskProgress.TODO,
       priority: PriorityLevel.LOW,
     );
-    return state.copyWith.taskState(newTask: model);
+    return state.copyWith.taskState(newTask: task ?? model);
   }
 }
 
@@ -38,6 +42,19 @@ class UpdateTask extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     await TaskApi().update(id, task);
+
+    return null;
+  }
+}
+
+class DeleteTask extends ReduxAction<AppState> {
+  DeleteTask(this.id);
+
+  final String id;
+
+  @override
+  Future<AppState?> reduce() async {
+    await TaskApi().delete(id);
 
     return null;
   }

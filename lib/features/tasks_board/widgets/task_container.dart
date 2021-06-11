@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_sample/apis/tasks_api/models/task_model.dart';
+import 'package:firebase_sample/features/tasks_board/widgets/action_dialog.dart';
 import 'package:firebase_sample/features/tasks_board/widgets/task_card.dart';
 import 'package:firebase_sample/utilities/colors.dart';
 import 'package:firebase_sample/utilities/enums.dart';
@@ -8,11 +10,19 @@ import 'package:flutter/material.dart';
 
 class TaskContainer extends StatelessWidget {
   const TaskContainer({
+    required this.onSelectTask,
+    required this.onEditTapped,
+    required this.onMoveTask,
+    required this.onDeleteTask,
     required this.stream,
     this.progress,
     Key? key,
   }) : super(key: key);
 
+  final Function(TaskModel task) onSelectTask;
+  final Function(String id) onEditTapped;
+  final Future<void> Function(String id, TaskModel task) onMoveTask;
+  final Future<void> Function(String id) onDeleteTask;
   final Stream<QuerySnapshot<Map<String, dynamic>>> stream;
   final TaskProgress? progress;
 
@@ -48,7 +58,20 @@ class TaskContainer extends StatelessWidget {
                 shrinkWrap: true,
                 children: snapshot.data!.docs.map((e) {
                   return TaskCard(
-                    onTap: () => print('asd'),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ActionDialog(
+                          onEditTask: () {
+                            onSelectTask(e.toTask);
+                            onEditTapped(e.id);
+                          },
+                          onMoveTask: (p) async => await onMoveTask(e.id, e.toTask.copyWith(progress: p)),
+                          onDeleteTask: () => onDeleteTask(e.id),
+                          task: e.toTask,
+                        ),
+                      );
+                    },
                     id: e.id,
                     title: e.toTask.title,
                     type: e.toTask.type,

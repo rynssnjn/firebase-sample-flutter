@@ -47,14 +47,16 @@ class TaskCard extends StatelessWidget {
                 ),
               ),
               HorizontalSpacer(20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title!, style: textTheme.headline4),
-                  Text(id!, style: textTheme.bodyText1),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title!, style: textTheme.headline4),
+                    Text(id!, style: textTheme.bodyText1),
+                  ],
+                ),
               ),
-              Spacer(),
+              HorizontalSpacer(20),
               Transform.rotate(
                 angle: 80.1,
                 child: Icon(

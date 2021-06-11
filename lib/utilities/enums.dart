@@ -30,3 +30,5 @@ enum PriorityLevel {
   @JsonValue(3)
   URGENT,
 }
+
+enum TaskAction { CREATE, EDIT }

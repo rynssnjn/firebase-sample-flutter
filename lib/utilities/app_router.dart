@@ -10,7 +10,8 @@ class AppRouter {
       case TaskBoardConnector.route:
         return MaterialPageRoute<dynamic>(builder: (_) => TaskBoardConnector());
       case TaskPageConnector.route:
-        return MaterialPageRoute<dynamic>(builder: (_) => TaskPageConnector());
+        final args = settings.arguments as TaskPageArguments;
+        return MaterialPageRoute<dynamic>(builder: (_) => TaskPageConnector(args: args));
       default:
         return MaterialPageRoute<dynamic>(builder: (_) => Scaffold(body: Center(child: Text('empty'))));
     }

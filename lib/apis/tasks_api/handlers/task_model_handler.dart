@@ -11,4 +11,8 @@ class TaskApi {
   Future update(String id, TaskModel body) async {
     return await firestoreInstance.collection(collectionPath).doc(id).update(body.toJson());
   }
+
+  Future delete(String id) async {
+    return await firestoreInstance.collection(collectionPath).doc(id).delete();
+  }
 }
