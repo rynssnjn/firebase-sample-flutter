@@ -33,19 +33,58 @@ extension TicketTypeExt on TicketType {
         return 'Change Request';
     }
   }
+
+  IconData get icon {
+    switch (this) {
+      case TicketType.BUG:
+        return Icons.bug_report;
+      case TicketType.TASK:
+        return Icons.task;
+      case TicketType.CHANGE_REQUEST:
+        return Icons.replay_circle_filled;
+    }
+  }
 }
 
 extension TaskProgressExt on TaskProgress {
   String get stringValue {
     switch (this) {
       case TaskProgress.TODO:
-        return 'TODO';
+        return 'TO DO';
       case TaskProgress.IN_PROGRESS:
         return 'In progress';
       case TaskProgress.IN_TESTING:
         return 'In testing';
       case TaskProgress.DONE:
         return 'Approved';
+    }
+  }
+}
+
+extension PriorityLevelExt on PriorityLevel {
+  Color get color {
+    switch (this) {
+      case PriorityLevel.LOW:
+        return Colors.green;
+      case PriorityLevel.MEDIUM:
+        return Colors.yellow;
+      case PriorityLevel.HIGH:
+        return Colors.orange;
+      case PriorityLevel.URGENT:
+        return Colors.red;
+    }
+  }
+
+  String get stringValue {
+    switch (this) {
+      case PriorityLevel.LOW:
+        return 'Low';
+      case PriorityLevel.MEDIUM:
+        return 'Medium';
+      case PriorityLevel.HIGH:
+        return 'High';
+      case PriorityLevel.URGENT:
+        return 'Urgent';
     }
   }
 }

@@ -8,4 +8,5 @@ abstract class UnionTaskForm with _$UnionTaskForm {
   const factory UnionTaskForm.title([String? title]) = Title;
   const factory UnionTaskForm.description([String? description]) = Description;
   const factory UnionTaskForm.type([TicketType? type]) = Type;
+  const factory UnionTaskForm.priority([PriorityLevel? priority]) = Priority;
 }

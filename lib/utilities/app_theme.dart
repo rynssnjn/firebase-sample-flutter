@@ -39,8 +39,9 @@ final ThemeData appTheme = ThemeData(
     ),
     // from headline 6 to headline 6
     headline6: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.bold,
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+      color: Colors.black.withOpacity(0.6),
     ),
     // from subtitle 2 to bodyText 1
     bodyText1: TextStyle(

@@ -9,3 +9,5 @@ final dividerGradient = LinearGradient(
 );
 
 const Color formErrorColor = Color(0xfffe8383);
+
+const Color lightGrey = Color(0xffDDE2E7);

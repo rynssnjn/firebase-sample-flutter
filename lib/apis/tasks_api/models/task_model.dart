@@ -11,6 +11,7 @@ abstract class TaskModel with _$TaskModel {
     @JsonKey(name: 'description') String? description,
     @JsonKey(name: 'progress') TaskProgress? progress,
     @JsonKey(name: 'type') TicketType? type,
+    @JsonKey(name: 'priority') PriorityLevel? priority,
   }) = _TaskModel;
 
   factory TaskModel.fromJson(Map<String, dynamic> json) => _$TaskModelFromJson(json);

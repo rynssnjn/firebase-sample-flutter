@@ -14,6 +14,7 @@ class InitNewTask extends ReduxAction<AppState> {
       description: '',
       type: TicketType.BUG,
       progress: TaskProgress.TODO,
+      priority: PriorityLevel.LOW,
     );
     return state.copyWith.taskState(newTask: model);
   }

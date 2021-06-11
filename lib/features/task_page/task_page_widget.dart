@@ -5,34 +5,40 @@ import 'package:firebase_sample/widgets/app_text_field.dart';
 import 'package:firebase_sample/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 
-class AddTaskWidget extends StatefulWidget {
-  const AddTaskWidget({
-    required this.onAddTask,
+class TaskPageWidget extends StatefulWidget {
+  const TaskPageWidget({
+    required this.onSaveTask,
     required this.onChangeTitle,
     required this.onChangeDescription,
     required this.onChangeTicketType,
+    required this.onChangePriority,
     this.type,
+    this.priority,
     Key? key,
   }) : super(key: key);
 
-  final Future<void> Function() onAddTask;
+  final Future<void> Function() onSaveTask;
   final Function(String text) onChangeTitle;
   final Function(String text) onChangeDescription;
-  final Function(TicketType? type) onChangeTicketType;
+  final Function(TicketType type) onChangeTicketType;
+  final Function(PriorityLevel priority) onChangePriority;
   final TicketType? type;
+  final PriorityLevel? priority;
 
   @override
-  _AddTaskWidgetState createState() => _AddTaskWidgetState();
+  _TaskPageWidgetState createState() => _TaskPageWidgetState();
 }
 
-class _AddTaskWidgetState extends State<AddTaskWidget> {
+class _TaskPageWidgetState extends State<TaskPageWidget> {
   TicketType? ticketType;
+  PriorityLevel? priorityLevel;
   TextEditingController? titleContoller;
   TextEditingController? descriptionController;
 
   @override
   void initState() {
     ticketType = widget.type;
+    priorityLevel = widget.priority;
     titleContoller = TextEditingController();
     descriptionController = TextEditingController();
     super.initState();
@@ -75,7 +81,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     value: ticketType,
                     items: TicketType.values,
                     onChanged: (type) {
-                      widget.onChangeTicketType(type);
+                      widget.onChangeTicketType(type!);
                       setState(() => ticketType = type);
                     },
                     isRequired: true,
@@ -83,6 +89,19 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     hintText: 'Type',
                     hintTextStyle: textTheme.bodyText1,
                     helperText: 'Ticket Type',
+                  ),
+                  AppDropdown<PriorityLevel>(
+                    value: priorityLevel,
+                    items: PriorityLevel.values,
+                    onChanged: (priority) {
+                      widget.onChangePriority(priority!);
+                      setState(() => priorityLevel = priority);
+                    },
+                    isRequired: true,
+                    textBuilder: (type) => type.stringValue,
+                    hintText: 'Priority',
+                    hintTextStyle: textTheme.bodyText1,
+                    helperText: 'Priority Level',
                   ),
                   AppTextField(
                     controller: titleContoller,
@@ -108,7 +127,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   Center(
                     child: LoadingWidget(
                       futureCallback: () async {
-                        await widget.onAddTask();
+                        await widget.onSaveTask();
                         Navigator.pop(context);
                       },
                       renderChild: (isLoading, onTap) => isLoading

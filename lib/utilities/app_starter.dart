@@ -6,8 +6,7 @@ import 'package:firebase_sample/test_app.dart';
 import 'package:flutter/material.dart';
 
 final firestoreInstance = FirebaseFirestore.instance;
-final Stream<QuerySnapshot> stream = firestoreInstance.collection('TEST').snapshots();
-final Stream<QuerySnapshot> taskStream = firestoreInstance.collection('tasks').snapshots();
+final CollectionReference<Map<String, dynamic>> tasks = firestoreInstance.collection('tasks');
 
 void startApp() async {
   WidgetsFlutterBinding.ensureInitialized();
