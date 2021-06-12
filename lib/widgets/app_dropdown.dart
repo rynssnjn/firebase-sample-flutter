@@ -55,7 +55,10 @@ class AppDropdown<T> extends StatelessWidget {
             items: items!
                 .map((item) => DropdownMenuItem<T>(
                       value: item,
-                      child: Text(textBuilder!(item!)),
+                      child: Text(
+                        textBuilder!(item!),
+                        style: textTheme.bodyText2,
+                      ),
                     ))
                 .toList(),
             onChanged: onChanged,

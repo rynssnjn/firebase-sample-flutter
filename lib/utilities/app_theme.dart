@@ -49,12 +49,17 @@ final ThemeData appTheme = ThemeData(
       fontSize: 12,
     ),
     bodyText2: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.normal,
       color: Colors.black,
-      fontSize: 12,
     ),
     caption: TextStyle(
       color: Colors.black,
       fontSize: 10,
+    ),
+    subtitle1: TextStyle(
+      color: Colors.grey,
+      fontSize: 12,
     ),
   ),
 );

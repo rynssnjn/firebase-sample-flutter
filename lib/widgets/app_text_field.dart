@@ -4,12 +4,14 @@ import 'package:flutter/services.dart';
 
 class AppTextField extends StatelessWidget {
   const AppTextField({
+    this.initialValue,
     this.helperText,
     this.hintText,
     this.hintTextStyle,
     this.keyboardType,
     this.onChangedHandler,
     this.isRequired = false,
+    this.readonly = false,
     this.controller,
     this.inputTextStyle,
     this.message,
@@ -18,6 +20,7 @@ class AppTextField extends StatelessWidget {
     this.textInputAction = TextInputAction.next,
   });
 
+  final String? initialValue;
   final String? helperText;
   final String? hintText;
   final TextStyle? hintTextStyle;
@@ -25,6 +28,7 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<String>? onChangedHandler;
   final TextEditingController? controller;
   final bool? isRequired;
+  final bool? readonly;
   final TextStyle? inputTextStyle;
   final String? message;
   final Color? underlineColor;
@@ -40,6 +44,7 @@ class AppTextField extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextFormField(
+            initialValue: initialValue,
             controller: controller,
             maxLines: null,
             decoration: InputDecoration(
@@ -56,6 +61,7 @@ class AppTextField extends StatelessWidget {
             inputFormatters: inputFormatters,
             onChanged: onChangedHandler,
             textCapitalization: TextCapitalization.sentences,
+            readOnly: readonly!,
           ),
           SizedBox(height: 8),
           HelperText(
@@ -68,7 +74,7 @@ class AppTextField extends StatelessWidget {
             SizedBox(height: 5),
             Text(
               message!,
-              style: textTheme.caption!.copyWith(color: underlineColor),
+              style: textTheme.subtitle1!.copyWith(color: underlineColor),
             ),
           ]
         ],

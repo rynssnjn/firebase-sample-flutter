@@ -23,8 +23,8 @@ class TaskBoardViewModel extends BaseModel<AppState> {
   @override
   BaseModel fromStore() {
     return TaskBoardViewModel.build(
-      onInitNewTask: () => dispatch!(InitNewTask()),
-      onSelectTask: (task) => dispatch!(InitNewTask(task: task)),
+      onInitNewTask: () => dispatch!(InitTask()),
+      onSelectTask: (task) => dispatch!(InitTask(task: task)),
       onMoveTask: _onMoveTask,
       onDeleteTask: _onDeleteTask,
     );

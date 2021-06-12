@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
-import 'package:firebase_sample/apis/tasks_api/handlers/task_model_handler.dart';
+import 'package:firebase_sample/apis/api_service.dart';
 import 'package:firebase_sample/apis/tasks_api/models/task_model.dart';
 import 'package:firebase_sample/state/app_state.dart';
 import 'package:firebase_sample/utilities/enums.dart';
 
-class InitNewTask extends ReduxAction<AppState> {
-  InitNewTask({this.task});
+class InitTask extends ReduxAction<AppState> {
+  InitTask({this.task});
 
   final TaskModel? task;
 
@@ -19,15 +19,16 @@ class InitNewTask extends ReduxAction<AppState> {
       type: TicketType.BUG,
       progress: TaskProgress.TODO,
       priority: PriorityLevel.LOW,
+      creationDate: DateTime.now(),
     );
-    return state.copyWith.taskState(newTask: task ?? model);
+    return state.copyWith.taskState(task: task ?? model);
   }
 }
 
 class AddTask extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
-    await TaskApi().create(state.taskState.newTask!);
+    await ApiService().taskApi.create(state.taskState.task!);
 
     return null;
   }
@@ -41,7 +42,7 @@ class UpdateTask extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    await TaskApi().update(id, task);
+    await ApiService().taskApi.update(id, task);
 
     return null;
   }
@@ -54,7 +55,7 @@ class DeleteTask extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    await TaskApi().delete(id);
+    await ApiService().taskApi.delete(id);
 
     return null;
   }
@@ -66,5 +67,5 @@ class EditTask extends ReduxAction<AppState> {
   final TaskModel? task;
 
   @override
-  AppState? reduce() => state.copyWith.taskState(newTask: task);
+  AppState? reduce() => state.copyWith.taskState(task: task);
 }

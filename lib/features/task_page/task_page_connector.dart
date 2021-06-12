@@ -37,11 +37,11 @@ class TaskPageViewModel extends BaseModel<AppState> {
 
   Future<void> _onAddTask() async => await dispatchFuture!(AddTask());
 
-  Future<void> _onUpdateTask(String id) async => await dispatchFuture!(UpdateTask(id, state.taskState.newTask!));
+  Future<void> _onUpdateTask(String id) async => await dispatchFuture!(UpdateTask(id, state.taskState.task!));
 
   Future<void> _onDeleteTask(String id) async => await dispatchFuture!(DeleteTask(id));
 
-  TaskModel get _task => state.taskState.newTask!;
+  TaskModel get _task => state.taskState.task!;
 
   void _onEditTask(UnionTaskForm form) {
     final updatedTask = form.when(

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_sample/apis/tasks_api/models/task_model.dart';
 import 'package:firebase_sample/utilities/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 extension QueryDocumentSnapshotExt on QueryDocumentSnapshot<Object?> {
   Map<String, dynamic>? get decoded => jsonDecode(jsonEncode(data()));
@@ -17,9 +18,9 @@ extension TicketTypeExt on TicketType {
       case TicketType.BUG:
         return Colors.red;
       case TicketType.TASK:
-        return Colors.blueAccent;
+        return Colors.blue;
       case TicketType.CHANGE_REQUEST:
-        return Colors.greenAccent;
+        return Colors.green;
     }
   }
 
@@ -59,6 +60,19 @@ extension TaskProgressExt on TaskProgress {
         return 'Approved';
     }
   }
+
+  IconData get icon {
+    switch (this) {
+      case TaskProgress.TODO:
+        return Icons.checklist;
+      case TaskProgress.IN_PROGRESS:
+        return Icons.edit;
+      case TaskProgress.IN_TESTING:
+        return Icons.approval;
+      case TaskProgress.DONE:
+        return Icons.done;
+    }
+  }
 }
 
 extension PriorityLevelExt on PriorityLevel {
@@ -87,4 +101,8 @@ extension PriorityLevelExt on PriorityLevel {
         return 'Urgent';
     }
   }
+}
+
+extension DateTimeExt on DateTime {
+  String format(String dateFormat) => DateFormat(dateFormat).format(this);
 }

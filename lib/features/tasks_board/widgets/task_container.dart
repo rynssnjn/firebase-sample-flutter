@@ -5,7 +5,6 @@ import 'package:firebase_sample/features/tasks_board/widgets/task_card.dart';
 import 'package:firebase_sample/utilities/colors.dart';
 import 'package:firebase_sample/utilities/enums.dart';
 import 'package:firebase_sample/utilities/extensions.dart';
-import 'package:firebase_sample/widgets/widget_spacer.dart';
 import 'package:flutter/material.dart';
 
 class TaskContainer extends StatelessWidget {
@@ -28,15 +27,12 @@ class TaskContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Container(
       color: lightGrey,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(progress!.stringValue, style: textTheme.headline6),
-          VerticalSpacer(10),
           StreamBuilder(
             stream: stream,
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

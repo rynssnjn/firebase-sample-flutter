@@ -8,7 +8,7 @@ part 'task_state.g.dart';
 @freezed
 abstract class TaskState with _$TaskState {
   factory TaskState({
-    @JsonKey(name: 'newTask') TaskModel? newTask,
+    @JsonKey(name: 'task') TaskModel? task,
   }) = _TaskState;
 
   factory TaskState.fromJson(Map<String, dynamic> json) => _$TaskStateFromJson(json);

@@ -19,12 +19,12 @@ class HelperText extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text: helperText,
-            style: textTheme.caption,
+            style: textTheme.subtitle1,
           ),
           if (isRequired!)
             TextSpan(
               text: ' *',
-              style: textTheme.caption!.copyWith(color: formErrorColor),
+              style: textTheme.subtitle1!.copyWith(color: formErrorColor),
             ),
         ],
       ),

@@ -57,6 +57,7 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final hintStyle = textTheme.bodyText2!.copyWith(color: Colors.grey);
     return GestureDetector(
       onTap: () {
         final focus = FocusScope.of(context);
@@ -85,6 +86,15 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                 shrinkWrap: true,
                 children: [
                   if (widget.action == TaskAction.EDIT) ...[
+                    AppTextField(
+                      initialValue: widget.task!.creationDate!.format('yMMMMEEEEd'),
+                      hintText: 'Description goes here...',
+                      hintTextStyle: hintStyle,
+                      inputTextStyle: textTheme.bodyText2,
+                      helperText: 'Creation date',
+                      readonly: true,
+                    ),
+                    VerticalSpacer(15),
                     AppDropdown<TaskProgress>(
                       value: taskProgress,
                       items: TaskProgress.values,
@@ -95,30 +105,30 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                       isRequired: true,
                       textBuilder: (type) => type.stringValue,
                       hintText: 'TO DO',
-                      hintTextStyle: textTheme.bodyText1,
+                      hintTextStyle: textTheme.bodyText2,
                       helperText: 'Move to:',
                     ),
                     VerticalSpacer(15),
                   ],
                   AppTextField(
                     controller: titleContoller,
-                    hintText: 'Title',
-                    hintTextStyle: textTheme.bodyText1!.copyWith(color: Colors.grey),
+                    hintText: 'Title goes here...',
+                    hintTextStyle: hintStyle,
                     isRequired: true,
                     textInputAction: TextInputAction.next,
-                    inputTextStyle: textTheme.bodyText1,
+                    inputTextStyle: textTheme.bodyText2,
                     helperText: 'Task Title',
                     onChangedHandler: (text) => widget.onEditTask!(UnionTaskForm.title(text)),
                   ),
                   VerticalSpacer(15),
                   AppTextField(
                     controller: descriptionController,
-                    hintText: 'Description',
-                    hintTextStyle: textTheme.bodyText1!.copyWith(color: Colors.grey),
+                    hintText: 'Description goes here...',
+                    hintTextStyle: hintStyle,
                     keyboardType: TextInputType.multiline,
                     isRequired: true,
                     textInputAction: TextInputAction.newline,
-                    inputTextStyle: textTheme.bodyText1,
+                    inputTextStyle: textTheme.bodyText2,
                     helperText: 'Task Description',
                     onChangedHandler: (text) => widget.onEditTask!(UnionTaskForm.description(text)),
                   ),
@@ -133,7 +143,7 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                     isRequired: true,
                     textBuilder: (type) => type.stringValue,
                     hintText: 'Type',
-                    hintTextStyle: textTheme.bodyText1,
+                    hintTextStyle: textTheme.bodyText2,
                     helperText: 'Ticket Type',
                   ),
                   VerticalSpacer(15),
@@ -147,14 +157,14 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                     isRequired: true,
                     textBuilder: (type) => type.stringValue,
                     hintText: 'Priority',
-                    hintTextStyle: textTheme.bodyText1,
+                    hintTextStyle: textTheme.bodyText2,
                     helperText: 'Priority Level',
                   ),
                   VerticalSpacer(35),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (widget.action == TaskAction.EDIT)
+                      if (widget.action == TaskAction.EDIT) ...[
                         LoadingWidget(
                           futureCallback: () async {
                             await widget.onDeleteTask();
@@ -172,7 +182,8 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                                   child: Text('Delete'),
                                 ),
                         ),
-                      HorizontalSpacer(10),
+                        HorizontalSpacer(10),
+                      ],
                       LoadingWidget(
                         futureCallback: () async {
                           if (widget.action == TaskAction.CREATE) {
