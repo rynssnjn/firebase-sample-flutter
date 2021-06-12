@@ -19,3 +19,16 @@ enum TicketType {
   @JsonValue(2)
   CHANGE_REQUEST
 }
+
+enum PriorityLevel {
+  @JsonValue(0)
+  LOW,
+  @JsonValue(1)
+  MEDIUM,
+  @JsonValue(2)
+  HIGH,
+  @JsonValue(3)
+  URGENT,
+}
+
+enum TaskAction { CREATE, EDIT }
