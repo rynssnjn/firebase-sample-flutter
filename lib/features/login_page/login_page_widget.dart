@@ -79,6 +79,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     inputTextStyle: textTheme.bodyText2,
                     helperText: 'Email',
                     isRequired: true,
+                    isEmail: true,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
                   ),

@@ -13,6 +13,7 @@ class AppTextField extends StatelessWidget {
     this.isRequired = false,
     this.readonly = false,
     this.isPassword = false,
+    this.isEmail = false,
     this.controller,
     this.inputTextStyle,
     this.message,
@@ -31,6 +32,7 @@ class AppTextField extends StatelessWidget {
   final bool? isRequired;
   final bool? readonly;
   final bool? isPassword;
+  final bool? isEmail;
   final TextStyle? inputTextStyle;
   final String? message;
   final Color? underlineColor;
@@ -62,7 +64,7 @@ class AppTextField extends StatelessWidget {
             style: inputTextStyle ?? textTheme.bodyText1!,
             inputFormatters: inputFormatters,
             onChanged: onChangedHandler,
-            textCapitalization: TextCapitalization.sentences,
+            textCapitalization: isEmail! ? TextCapitalization.none : TextCapitalization.sentences,
             readOnly: readonly!,
             obscureText: isPassword!,
           ),
