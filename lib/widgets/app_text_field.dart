@@ -12,6 +12,7 @@ class AppTextField extends StatelessWidget {
     this.onChangedHandler,
     this.isRequired = false,
     this.readonly = false,
+    this.isPassword = false,
     this.controller,
     this.inputTextStyle,
     this.message,
@@ -29,6 +30,7 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool? isRequired;
   final bool? readonly;
+  final bool? isPassword;
   final TextStyle? inputTextStyle;
   final String? message;
   final Color? underlineColor;
@@ -46,7 +48,7 @@ class AppTextField extends StatelessWidget {
           TextFormField(
             initialValue: initialValue,
             controller: controller,
-            maxLines: null,
+            maxLines: isPassword! ? 1 : null,
             decoration: InputDecoration(
               border: InputBorder.none,
               isDense: true,
@@ -62,6 +64,7 @@ class AppTextField extends StatelessWidget {
             onChanged: onChangedHandler,
             textCapitalization: TextCapitalization.sentences,
             readOnly: readonly!,
+            obscureText: isPassword!,
           ),
           SizedBox(height: 8),
           HelperText(

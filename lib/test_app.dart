@@ -5,6 +5,8 @@ import 'package:firebase_sample/utilities/app_router.dart';
 import 'package:firebase_sample/utilities/app_theme.dart';
 import 'package:flutter/material.dart';
 
+import 'features/login_page/login_page_connector.dart';
+
 class TestApp extends StatelessWidget {
   const TestApp({
     this.store,
@@ -22,7 +24,8 @@ class TestApp extends StatelessWidget {
         home: Scaffold(
           body: Navigator(
             key: navigatorKey,
-            initialRoute: TaskBoardConnector.route,
+            // initialRoute: TestPage.route,
+            initialRoute: store!.state.userState.isLoggedIn ? TaskBoardConnector.route : LoginPageConnector.route,
             onGenerateRoute: AppRouter.generateRoute,
           ),
         ),

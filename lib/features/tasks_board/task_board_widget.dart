@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_sample/apis/api_service.dart';
 import 'package:firebase_sample/apis/tasks_api/models/task_model.dart';
 import 'package:firebase_sample/features/task_page/task_page_connector.dart';
@@ -37,6 +38,7 @@ class TaskBoardWidget extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
+                FirebaseAuth.instance.signOut();
                 onInitNewTask();
                 _navigateToTaskPage(context, TaskAction.CREATE);
               },
