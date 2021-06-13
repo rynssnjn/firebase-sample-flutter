@@ -13,6 +13,27 @@ class CheckAuthentication extends ReduxAction<AppState> {
 
     return state.copyWith.userState(isLoggedIn: isLoggedIn);
   }
+
+  @override
+  void after() {
+    if (state.userState.isLoggedIn) {
+      dispatch(GetUser(ApiService().userApi.auth.currentUser!.uid));
+    }
+    super.after();
+  }
+}
+
+class GetUser extends ReduxAction<AppState> {
+  GetUser(this.uid);
+
+  final String uid;
+
+  @override
+  Future<AppState?> reduce() async {
+    final user = await ApiService().userApi.getUserByUid(uid);
+
+    return state.copyWith.userState(user: user);
+  }
 }
 
 class LoginUser extends LoginAction {

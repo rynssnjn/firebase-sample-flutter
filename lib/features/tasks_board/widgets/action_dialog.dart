@@ -1,4 +1,5 @@
 import 'package:firebase_sample/apis/tasks_api/models/task_model.dart';
+import 'package:firebase_sample/features/task_page/widgets/read_only_fields.dart';
 import 'package:firebase_sample/utilities/enums.dart';
 import 'package:firebase_sample/utilities/extensions.dart';
 import 'package:firebase_sample/widgets/loading_widget.dart';
@@ -84,7 +85,7 @@ class ActionDialog extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (task!.description!.length > 100) ...[
-                  VerticalSpacer(15),
+                  VerticalSpacer(5),
                   InkWell(
                     onTap: () => _onEditTask(context),
                     child: Text(
@@ -97,8 +98,10 @@ class ActionDialog extends StatelessWidget {
                     ),
                   ),
                 ],
-                VerticalSpacer(15),
-                Text('Created at: ${task!.creationDate!.format('yMMMMEEEEd')}'),
+                ReadOnlyFields(
+                  creationDate: task!.creationDate,
+                  reporter: task!.creator,
+                ),
                 VerticalSpacer(25),
                 Text('Move to:', style: textTheme.headline4),
                 ...TaskProgress.values
