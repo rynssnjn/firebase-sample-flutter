@@ -20,6 +20,7 @@ class InitTask extends ReduxAction<AppState> {
       progress: TaskProgress.TODO,
       priority: PriorityLevel.LOW,
       creationDate: DateTime.now(),
+      creator: state.userState.user,
     );
     return state.copyWith.taskState(task: task ?? model);
   }

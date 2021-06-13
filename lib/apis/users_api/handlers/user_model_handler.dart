@@ -11,6 +11,16 @@ class UserApi {
 
   final CollectionReference<Map<String, dynamic>> collection;
 
+  Future<UserModel> getUserByUid(String uid) async {
+    final users = await collection.get().then(
+          (value) => value.docs.map((e) {
+            final decoded = jsonDecode(jsonEncode(e.data()));
+            return UserModel.fromJson(decoded);
+          }).toList(),
+        );
+    return users.firstWhere((user) => user.uid == uid);
+  }
+
   Future<UserModel> login(String email, String password) async {
     final credentials = await auth.signInWithEmailAndPassword(email: email, password: password);
     final users = await collection.get().then(

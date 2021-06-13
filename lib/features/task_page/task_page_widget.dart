@@ -1,4 +1,5 @@
 import 'package:firebase_sample/apis/tasks_api/models/task_model.dart';
+import 'package:firebase_sample/features/task_page/widgets/read_only_fields.dart';
 import 'package:firebase_sample/models/union_task_form.dart';
 import 'package:firebase_sample/utilities/enums.dart';
 import 'package:firebase_sample/utilities/extensions.dart';
@@ -36,6 +37,7 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
   TaskProgress? taskProgress;
   TextEditingController? titleContoller;
   TextEditingController? descriptionController;
+  bool? isEditMode;
 
   @override
   void initState() {
@@ -44,6 +46,7 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
     taskProgress = widget.task!.progress;
     titleContoller = TextEditingController(text: widget.task!.title ?? '');
     descriptionController = TextEditingController(text: widget.task!.description ?? '');
+    isEditMode = widget.action == TaskAction.EDIT;
     super.initState();
   }
 
@@ -85,16 +88,7 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  if (widget.action == TaskAction.EDIT) ...[
-                    AppTextField(
-                      initialValue: widget.task!.creationDate!.format('yMMMMEEEEd'),
-                      hintText: 'Description goes here...',
-                      hintTextStyle: hintStyle,
-                      inputTextStyle: textTheme.bodyText2,
-                      helperText: 'Creation date',
-                      readonly: true,
-                    ),
-                    VerticalSpacer(15),
+                  if (isEditMode!) ...[
                     AppDropdown<TaskProgress>(
                       value: taskProgress,
                       items: TaskProgress.values,
@@ -162,6 +156,12 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                     hintTextStyle: textTheme.bodyText2,
                     helperText: 'Priority Level',
                   ),
+                  if (isEditMode!)
+                    ReadOnlyFields(
+                      reporter: widget.task!.creator,
+                      creationDate: widget.task!.creationDate,
+                      spacing: 25,
+                    ),
                   VerticalSpacer(35),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

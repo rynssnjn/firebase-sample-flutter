@@ -7,11 +7,11 @@ class TaskApi {
   final CollectionReference<Map<String, dynamic>> collection;
 
   Future create(TaskModel body) async {
-    return await collection.add(body.toJson());
+    return await collection.add(body.decodeToJson());
   }
 
   Future update(String id, TaskModel body) async {
-    return await collection.doc(id).update(body.toJson());
+    return await collection.doc(id).update(body.decodeToJson());
   }
 
   Future delete(String id) async {

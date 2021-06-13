@@ -3,6 +3,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
+extension UserModelExt on UserModel {
+  String get fullName => '$firstname $surname';
+
+  String get fullNameSurnameFirst => '$surname, $firstname';
+}
+
 @freezed
 abstract class UserModel with _$UserModel {
   factory UserModel({
