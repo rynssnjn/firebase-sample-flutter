@@ -10,7 +10,7 @@ part 'user_state.g.dart';
 abstract class UserState with _$UserState {
   factory UserState({
     @JsonKey(name: 'isLoggedIn') required bool isLoggedIn,
-    @JsonKey(name: 'onLoggedInEvt', ignore: true) Event<bool>? onLoggedInEvt,
+    @JsonKey(name: 'isLoggedInEvt', ignore: true) Event<bool>? isLoggedInEvt,
     @JsonKey(name: 'user') UserModel? user,
   }) = _UserState;
 

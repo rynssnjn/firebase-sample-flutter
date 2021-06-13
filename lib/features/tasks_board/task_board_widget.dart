@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_sample/apis/api_service.dart';
 import 'package:firebase_sample/apis/tasks_api/models/task_model.dart';
 import 'package:firebase_sample/features/task_page/task_page_connector.dart';
+import 'package:firebase_sample/features/tasks_board/widgets/logout_dialog.dart';
 import 'package:firebase_sample/features/tasks_board/widgets/task_container.dart';
 import 'package:firebase_sample/utilities/enums.dart';
 import 'package:firebase_sample/utilities/extensions.dart';
@@ -13,6 +13,7 @@ class TaskBoardWidget extends StatelessWidget {
     required this.onSelectTask,
     required this.onMoveTask,
     required this.onDeleteTask,
+    required this.onLogout,
     Key? key,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class TaskBoardWidget extends StatelessWidget {
   final Function(TaskModel task) onSelectTask;
   final Future<void> Function(String id, TaskModel task) onMoveTask;
   final Future<void> Function(String id) onDeleteTask;
+  final Future<void> Function() onLogout;
 
   void _navigateToTaskPage(BuildContext context, TaskAction action) => Navigator.pushNamed(
         context,
@@ -36,12 +38,11 @@ class TaskBoardWidget extends StatelessWidget {
           backgroundColor: Colors.green,
           actions: [
             IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                onInitNewTask();
-                _navigateToTaskPage(context, TaskAction.CREATE);
-              },
+              onPressed: () => showDialog(
+                context: context,
+                builder: (c) => LogoutDialog(onLogout: onLogout),
+              ),
+              icon: Icon(Icons.logout),
             ),
           ],
           title: Text('Task board'),
@@ -74,6 +75,14 @@ class TaskBoardWidget extends StatelessWidget {
                     ))
                 .toList(),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            onInitNewTask();
+            _navigateToTaskPage(context, TaskAction.CREATE);
+          },
+          backgroundColor: Colors.green,
+          child: Icon(Icons.add),
         ),
       ),
     );

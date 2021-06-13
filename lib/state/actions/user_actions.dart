@@ -71,6 +71,12 @@ class LogoutUser extends ReduxAction<AppState> {
 
     return AppState.init();
   }
+
+  @override
+  void after() {
+    dispatch(UpdateLoginEvent(false));
+    super.after();
+  }
 }
 
 class UpdateLoginEvent extends ReduxAction<AppState> {
@@ -79,11 +85,5 @@ class UpdateLoginEvent extends ReduxAction<AppState> {
   final bool isLoggedIn;
 
   @override
-  AppState? reduce() => state.copyWith.userState(onLoggedInEvt: Event(true));
-
-  @override
-  Object? wrapError(error) {
-    print(error);
-    return super.wrapError(error);
-  }
+  AppState? reduce() => state.copyWith.userState(isLoggedInEvt: Event(isLoggedIn));
 }

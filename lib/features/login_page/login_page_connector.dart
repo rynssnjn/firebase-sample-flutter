@@ -10,21 +10,27 @@ class LoginPageVM extends BaseModel<AppState> {
 
   LoginPageVM.build({
     this.onLogin,
-    this.onLoggedInEvt,
-  }) : super(equals: [onLoggedInEvt]);
+    this.onRegister,
+    this.isLoggedInEvt,
+  }) : super(equals: [isLoggedInEvt]);
 
   Future<void> Function(String email, String password)? onLogin;
-  Event<bool>? onLoggedInEvt;
+  Future<void> Function(String email, String password, String firstname, String surname)? onRegister;
+  Event<bool>? isLoggedInEvt;
 
   @override
   BaseModel fromStore() {
     return LoginPageVM.build(
       onLogin: _onLogin,
-      onLoggedInEvt: state.userState.onLoggedInEvt,
+      onRegister: _onRegister,
+      isLoggedInEvt: state.userState.isLoggedInEvt,
     );
   }
 
   Future<void> _onLogin(String email, String password) async => await dispatchFuture!(LoginUser(email, password));
+
+  Future<void> _onRegister(String email, String password, String firstname, String surname) async =>
+      await dispatchFuture!(RegisterUser(email, password, firstname, surname));
 }
 
 class LoginPageConnector extends StatelessWidget {
@@ -37,11 +43,14 @@ class LoginPageConnector extends StatelessWidget {
     return StoreConnector<AppState, LoginPageVM>(
       model: LoginPageVM(),
       onDidChange: (c, __, vm) {
-        if (vm.onLoggedInEvt?.consume() == true) {
+        if (vm.isLoggedInEvt?.consume() == true) {
           Navigator.pushReplacementNamed(c, TaskBoardConnector.route);
         }
       },
-      builder: (context, vm) => LoginPageWidget(onLogin: vm.onLogin!),
+      builder: (context, vm) => LoginPageWidget(
+        onLogin: vm.onLogin!,
+        onRegister: vm.onRegister!,
+      ),
     );
   }
 }

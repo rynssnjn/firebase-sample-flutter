@@ -13,13 +13,13 @@ class AppTextField extends StatelessWidget {
     this.isRequired = false,
     this.readonly = false,
     this.isPassword = false,
-    this.isEmail = false,
     this.controller,
     this.inputTextStyle,
     this.message,
     this.underlineColor,
     this.inputFormatters,
     this.textInputAction = TextInputAction.next,
+    this.capitalization = TextCapitalization.none,
   });
 
   final String? initialValue;
@@ -32,12 +32,12 @@ class AppTextField extends StatelessWidget {
   final bool? isRequired;
   final bool? readonly;
   final bool? isPassword;
-  final bool? isEmail;
   final TextStyle? inputTextStyle;
   final String? message;
   final Color? underlineColor;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
+  final TextCapitalization? capitalization;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class AppTextField extends StatelessWidget {
             style: inputTextStyle ?? textTheme.bodyText1!,
             inputFormatters: inputFormatters,
             onChanged: onChangedHandler,
-            textCapitalization: isEmail! ? TextCapitalization.none : TextCapitalization.sentences,
+            textCapitalization: capitalization!,
             readOnly: readonly!,
             obscureText: isPassword!,
           ),
