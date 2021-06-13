@@ -46,6 +46,7 @@
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/android/app/local.properties
 
 # iOS/XCode related
 *.ipa

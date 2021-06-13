@@ -12,12 +12,14 @@ class AppTextField extends StatelessWidget {
     this.onChangedHandler,
     this.isRequired = false,
     this.readonly = false,
+    this.isPassword = false,
     this.controller,
     this.inputTextStyle,
     this.message,
     this.underlineColor,
     this.inputFormatters,
     this.textInputAction = TextInputAction.next,
+    this.capitalization = TextCapitalization.none,
   });
 
   final String? initialValue;
@@ -29,11 +31,13 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool? isRequired;
   final bool? readonly;
+  final bool? isPassword;
   final TextStyle? inputTextStyle;
   final String? message;
   final Color? underlineColor;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
+  final TextCapitalization? capitalization;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class AppTextField extends StatelessWidget {
           TextFormField(
             initialValue: initialValue,
             controller: controller,
-            maxLines: null,
+            maxLines: isPassword! ? 1 : null,
             decoration: InputDecoration(
               border: InputBorder.none,
               isDense: true,
@@ -60,8 +64,9 @@ class AppTextField extends StatelessWidget {
             style: inputTextStyle ?? textTheme.bodyText1!,
             inputFormatters: inputFormatters,
             onChanged: onChangedHandler,
-            textCapitalization: TextCapitalization.sentences,
+            textCapitalization: capitalization!,
             readOnly: readonly!,
+            obscureText: isPassword!,
           ),
           SizedBox(height: 8),
           HelperText(

@@ -119,6 +119,7 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                     inputTextStyle: textTheme.bodyText2,
                     helperText: 'Task Title',
                     onChangedHandler: (text) => widget.onEditTask!(UnionTaskForm.title(text)),
+                    capitalization: TextCapitalization.words,
                   ),
                   VerticalSpacer(15),
                   AppTextField(
@@ -131,6 +132,7 @@ class _TaskPageWidgetState extends State<TaskPageWidget> {
                     inputTextStyle: textTheme.bodyText2,
                     helperText: 'Task Description',
                     onChangedHandler: (text) => widget.onEditTask!(UnionTaskForm.description(text)),
+                    capitalization: TextCapitalization.sentences,
                   ),
                   VerticalSpacer(15),
                   AppDropdown<TicketType>(

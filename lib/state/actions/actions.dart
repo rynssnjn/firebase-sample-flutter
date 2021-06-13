@@ -1,31 +1,25 @@
-import 'dart:async';
-
 import 'package:async_redux/async_redux.dart';
-import 'package:firebase_sample/apis/test_api/handlers/test_model_handler.dart';
-import 'package:firebase_sample/apis/test_api/models/test_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_sample/state/actions/user_actions.dart';
 import 'package:firebase_sample/state/app_state.dart';
 
-class AddData extends ReduxAction<AppState> {
-  AddData({this.data});
-
-  final TestModel? data;
+abstract class LoginAction extends ReduxAction<AppState> {
+  bool requestSucceed = true;
 
   @override
-  Future<AppState?> reduce() async {
-    await TestApi().addTest(data!);
-
-    return null;
+  void after() {
+    if (requestSucceed) {
+      dispatch(UpdateLoginEvent(requestSucceed));
+    }
+    super.after();
   }
-}
 
-class GetData extends ReduxAction<AppState> {
   @override
-  Future<AppState?> reduce() async {
-    final tests = await TestApi().getTests();
-    tests?.forEach((element) {
-      print('name: ${element?.name}');
-      print('age: ${element?.age}');
-    });
-    return null;
+  Object? wrapError(error) {
+    requestSucceed = false;
+    if (error is FirebaseAuthException) {
+      return UserException(error.message);
+    }
+    return super.wrapError(error);
   }
 }
